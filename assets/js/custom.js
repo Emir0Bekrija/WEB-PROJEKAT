@@ -1,33 +1,3 @@
-// to get current year
-function getYear() {
-  var currentDate = new Date();
-  var currentYear = currentDate.getFullYear();
-  document.querySelector("#displayYear").innerHTML = currentYear;
-}
-
-getYear();
-
-// isotope js
-$(window).on("load", function () {
-  $(".filters_menu li").click(function () {
-    $(".filters_menu li").removeClass("active");
-    $(this).addClass("active");
-
-    var data = $(this).attr("data-filter");
-    $grid.isotope({
-      filter: data,
-    });
-  });
-
-  var $grid = $(".grid").isotope({
-    itemSelector: ".all",
-    percentPosition: false,
-    masonry: {
-      columnWidth: ".all",
-    },
-  });
-});
-
 // nice select
 $(document).ready(function () {
   $("select").niceSelect();
@@ -43,57 +13,31 @@ function myMap() {
 }
 
 // client section owl carousel
-$(".client_owl-carousel").owlCarousel({
-  loop: true,
-  margin: 0,
-  dots: false,
-  nav: true,
-  navText: [],
-  autoplay: true,
-  autoplayHoverPause: true,
-  navText: [
-    '<i class="fa fa-angle-left" aria-hidden="true"></i>',
-    '<i class="fa fa-angle-right" aria-hidden="true"></i>',
-  ],
-  responsive: {
-    0: {
-      items: 1,
+$(document).ready(function () {
+  $(".client_owl-carousel").owlCarousel({
+    loop: true,
+    margin: 0,
+    dots: false,
+    nav: true,
+    navText: [
+      '<i class="fa fa-angle-left" aria-hidden="true"></i>',
+      '<i class="fa fa-angle-right" aria-hidden="true"></i>',
+    ],
+    autoplay: true,
+    autoplayHoverPause: true,
+    responsive: {
+      0: {
+        items: 1,
+      },
+      768: {
+        items: 2,
+      },
+      1000: {
+        items: 2,
+      },
     },
-    768: {
-      items: 2,
-    },
-    1000: {
-      items: 2,
-    },
-  },
+  });
 });
-
-/*let blogsHtml = "";
-
-    blogHtml += `
-      <section id="blogSection" class="about_section layout_padding">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="img-box">
-                        <img src="assets/images/f1.png" alt="" />
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="detail-box">
-                        <div class="heading_container">
-                            <h2 class="postTitle"></h2>
-                        </div>
-                        <p class="postDescription">
-                          
-                        <h2>Creator: <a href="#profile"></a></h2>
-                        <button class="obrisi">Delete</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    `;*/
 
 /*async function fetchRecipeById(id) {
   try {
@@ -124,12 +68,10 @@ $(".client_owl-carousel").owlCarousel({
 }
 
 // Define an async function to call fetchRecipeById
-async function loadRecipeDetails() {
-  const recipeId = 3; // ID of the recipe you want to get details for
-
+function loadRecipeDetails(recipeId) {
   try {
     // Call fetchRecipeById and await its result
-    const recipeDetails = await fetchRecipeById(recipeId);
+    const recipeDetails = fetchRecipeById(recipeId);
 
     // Once the details are fetched, you can use them here
     if (recipeDetails) {
@@ -145,35 +87,14 @@ async function loadRecipeDetails() {
   } catch (error) {
     console.error("Error loading recipe details:", error);
   }
-}
+}*/
 
 // Call the async function to load recipe details
-loadRecipeDetails();*/
-document.addEventListener("DOMContentLoaded", async function () {
-  // Wait for the DOM to be fully loaded
 
-  // Get all the <a> elements with the href "#current-blog"
-  const recipeLinks = document.querySelectorAll('a[href="#current-blog"]');
-
-  // Add a click event listener to each <a> element
-  recipeLinks.forEach(function (link) {
-    link.addEventListener("click", async function (event) {
-      // Prevent the default action of the link
-      event.preventDefault();
-
-      // Get the value of the href attribute of the clicked <a> element
-      const linkHref = link.getAttribute("href");
-
-      // Get the value of the id attribute of the clicked <a> element
-      const recipeId = link.getAttribute("id");
-
-      // Log or use the recipeId as needed
-      console.log("Clicked recipe ID:", recipeId);
-
-      // Navigate to the link provided in the href attribute
-      window.location.href = linkHref;
-    });
-  });
+/*$(document).on("click", "a[href='#current-blog']", function (event) {
+  var recipeId = $(this).attr("id");
+  console.log("Clicked on recipe with ID:", recipeId);
+  loadRecipeDetails(recipeId);
 });
 
 // OVO JE ZA SVE BLOGOVE NE DIRAJ RADI
@@ -217,4 +138,4 @@ async function fetchBlogPosts() {
   } catch (error) {
     console.error("Error fetching blog data:", error);
   }
-}
+}*/

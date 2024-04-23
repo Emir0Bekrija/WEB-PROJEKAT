@@ -10,14 +10,15 @@
             <input type="file" id="file" />
             <label for="file" class="slike">Upload Photo</label>
           </div>
-          <button type="submit" class="potvrdi">Edit Profile</button>
+          <button type="submit" id="editProfileButton" class="potvrdi">
+            Edit Profile
+          </button>
         </div>
         <div class="col-md-6" style="text-align: center">
           <div class="detail-box">
             <h2 style="padding: 20px">Edit your Name</h2>
             <textarea
               name="name"
-              placeholder=""
               style="
                 resize: none;
                 height: 50px;
@@ -28,8 +29,7 @@
 
             <h2 style="padding: 40px 20px">Edit your Bio</h2>
             <textarea
-              name="name"
-              placeholder=""
+              name="bio"
               style="
                 resize: none;
                 height: 214px;
@@ -46,4 +46,5 @@
   <!-- end about section -->
 
   <!-- footer section -->
+  <script src="assets/js/edit-profile.js"></script>
 </body>

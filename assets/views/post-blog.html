@@ -11,9 +11,9 @@
         <label for="file" class="slike">Upload Photo</label>
         <h2 style="padding: 40px">Name of the dish</h2>
         <textarea
-          name="name"
+          name="titleName"
           placeholder="Name of the dish"
-          style="resize: none; height: 214px; width: 90%; border-radius: 20px"
+          style="resize: none; height: 65px; width: 90%; border-radius: 20px"
         ></textarea>
         <h2 style="padding: 40px">Short summary</h2>
         <textarea
@@ -21,25 +21,78 @@
           placeholder="Short summary"
           style="resize: none; height: 214px; width: 90%; border-radius: 20px"
         ></textarea>
+
         <h2 style="padding: 40px">Your Ingredients</h2>
-        <textarea
-          name="ingredients"
-          style="resize: none; height: 214px; width: 90%; border-radius: 20px"
-        ></textarea>
-        <h2 style="padding: 40px">Your instructions</h2>
-        <textarea
-          name="instructions"
-          style="resize: none; height: 214px; width: 90%; border-radius: 20px"
-        ></textarea>
+        <div id="ingredientContainer" style="width: 90%">
+          <h2>1. Ingredient</h2>
+          <textarea
+            name="ingredients"
+            style="resize: none; height: 65px; width: 100%; border-radius: 10px"
+          ></textarea>
+        </div>
+        <button id="add_more" class="potvrdi">Add more</button>
+
+        <h2 style="padding: 40px">Your Instructions</h2>
+        <div id="instructionsContainer" style="width: 90%">
+          <h2>1. Instruction</h2>
+          <textarea
+            name="instructions"
+            style="
+              resize: none;
+              height: 214px;
+              width: 100%;
+              border-radius: 20px;
+            "
+          ></textarea>
+        </div>
+        <button id="add_more_instructions" class="potvrdi">Add more</button>
+
         <h2 style="padding: 40px">Your Macros</h2>
         <textarea
           name="macros"
           style="resize: none; height: 214px; width: 90%; border-radius: 20px"
         ></textarea>
-        <button type="submit" class="potvrdi">Post Dish</button>
+        <button class="postBlog">Post Dish</button>
       </div>
     </div>
   </section>
+
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="assets/js/post-blog.js"></script>
+  <script>
+    let number_of_ingredients = 1;
+    $(document).ready(function () {
+      $("#add_more").click(function () {
+        number_of_ingredients++;
+        // Create a new ingredient input field
+        var newIngredientField = $("<textarea>").attr({
+          name: "ingredient" + (number_of_ingredients + 1),
+          style: "resize: none; height: 65px; width: 100%;border-radius: 10px;",
+        });
+
+        // Append the new ingredient input field to the container
+        $("#ingredientContainer")
+          .append("<h2>" + number_of_ingredients + ". Ingredient</h2>")
+          .append(newIngredientField);
+      });
+
+      let number_of_instructions = 1;
+      $("#add_more_instructions").click(function () {
+        number_of_instructions++;
+        // Create a new ingredient input field
+        var newInstructionField = $("<textarea>").attr({
+          name: "instructions" + (number_of_instructions + 1),
+          style:
+            "resize: none; height: 214px; width: 100%;border-radius: 20px;",
+        });
+
+        // Append the new ingredient input field to the container
+        $("#instructionsContainer")
+          .append("<h2>" + number_of_instructions + ". Instruction</h2>")
+          .append(newInstructionField);
+      });
+    });
+  </script>
 
   <!-- end post blog section -->
 </body>
