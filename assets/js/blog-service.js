@@ -7,32 +7,35 @@ const BlogService = {
 
   getBlogs: function () {
     $.ajax({
-      url: "blog_data.json",
+      url: "http://localhost/WEB-PROJEKAT/rest/blogs",
       type: "GET",
       dataType: "json",
       success: function (data) {
         let blogsHtml = "";
-        data.recipes.forEach((recipe, index) => {
-          blogsHtml += `
-                <a href="#current-blog" id=${recipe.id} onclick="BlogService.getBlogDetailsDelayed(${recipe.id})">
+        let recipe = data;
+        if (recipe.length != 0) {
+          for (let i = 0; i < recipe.length; i++) {
+            blogsHtml += `
+                <a href="#current-blog" id=${recipe[i].idblogs} onclick="BlogService.getBlogDetailsDelayed(${recipe[i].idblogs})">
                     <div class="col-sm-6 col-lg-4-blog all pizza">
                     <div class="box">
                         <div>
                         <div class="img-box">
-                            <img src="assets/images/f1.p" alt="${recipe.name}" />
+                            <img src="assets/images/f1.p" alt="${recipe[i].Name}" />
                         </div>
                         <div class="detail-box">
-                            <h5 class="item-name">${recipe.name}</h5>
-                            <p class="creator">${recipe.creator}</p>
-                            <h6>${recipe.summary}</h6>,
-                            <h6>${recipe.macros}</h6>
+                            <h5 class="item-name">${recipe[i].Name}</h5>
+                            <p class="creator">${recipe[i].UserId}</p>
+                            <h6>${recipe[i].Summary}</h6>,
+                            <h6>${recipe[i].Macros}</h6>
                             <!-- You can add more details here if needed -->
                         </div>
                         </div>
                     </div>
                     </div>
                 </a>  `;
-        });
+          }
+        }
         $(".filters-content").html(blogsHtml);
       },
       error: function (xhr, status, error) {
@@ -50,34 +53,55 @@ const BlogService = {
 
   getBlogDetails: function (recipeId) {
     $.ajax({
-      url: "blog_data.json",
+      url: "http://localhost/WEB-PROJEKAT/rest/blogs/" + recipeId,
       type: "GET",
       dataType: "json",
       success: function (data) {
-        const recipeDetails = data.recipes.find(
-          (recipe) => recipe.id == recipeId
-        );
-        if (recipeDetails) {
-          let creatorHtml = `<a href="#profile" id=${recipeDetails.userID} onclick="BlogService.getProfilegDetailsDelayed(${recipeDetails.userID})">${recipeDetails.creator}</a>`;
-          $(".postCreator").html(creatorHtml);
-          let Title = `<h2 class="postTitle" id="${recipeDetails.id}">${recipeDetails.name}</h2>`;
-          $(".heading_container_titlePost").html(Title);
-          $(".postSummary").html(recipeDetails.summary);
-          let ingredientsHtml = "";
-          recipeDetails.ingredients.forEach((ingredient) => {
-            ingredientsHtml += `<li>${ingredient}</li>`;
-          });
-          $(".ingredientsList").html(ingredientsHtml);
-          let instructionsHtml = "";
-          recipeDetails.instructions.forEach((instruction) => {
-            instructionsHtml += `<li>${instruction}</li>`;
-          });
-          $(".instructionsList").html(instructionsHtml);
-          $(".Macros").html(recipeDetails.macros);
-          BlogService.getComments(recipeId);
-        } else {
-          console.log("Recipe details not found.");
-        }
+        const recipeDetails = data;
+        $.ajax({
+          url:
+            "http://localhost/WEB-PROJEKAT/rest/users/" + recipeDetails.UserId,
+          type: "GET",
+          dataType: "json",
+          success: function (data) {
+            const profileDetails = data;
+            let username = profileDetails.Name + " " + profileDetails.Surname;
+            let creatorHtml = `<a href="#profile" id=${recipeDetails.UserId} onclick="BlogService.getProfilegDetailsDelayed(${recipeDetails.UserId})">${username}</a>`;
+            $(".postCreator").html(creatorHtml);
+          },
+        });
+        let Title = `<h2 class="postTitle" id="${recipeDetails.idblogs}">${recipeDetails.Name}</h2>`;
+        $(".heading_container_titlePost").html(Title);
+        $(".postSummary").html(recipeDetails.Summary);
+
+        $.ajax({
+          url: "http://localhost/WEB-PROJEKAT/rest/ingredients/" + recipeId,
+          type: "GET",
+          dataType: "json",
+          success: function (data) {
+            let ingredientsHtml = "";
+            for (let i = 0; i < data.length; i++) {
+              ingredientsHtml += `<li>${data[i].ingredient}</li>`;
+            }
+            $(".ingredientsList").html(ingredientsHtml);
+          },
+        });
+
+        $.ajax({
+          url: "http://localhost/WEB-PROJEKAT/rest/instructions/" + recipeId,
+          type: "GET",
+          dataType: "json",
+          success: function (data) {
+            let instructionsHtml = "";
+            for (let i = 0; i < data.length; i++) {
+              instructionsHtml += `<li>${data[i].instruction}</li>`;
+            }
+            $(".instructionsList").html(instructionsHtml);
+          },
+        });
+
+        $(".Macros").html(recipeDetails.Macros);
+        BlogService.getComments(recipeId);
       },
       error: function (xhr, status, error) {
         console.error("Error fetching data from file:", error);
@@ -87,19 +111,18 @@ const BlogService = {
 
   getComments: function (recipeId) {
     $.ajax({
-      url: "comments.json",
+      url: "http://localhost/WEB-PROJEKAT/rest/comments/" + recipeId,
       type: "GET",
       dataType: "json",
       success: function (data) {
         let commentsHtml = "";
-        data.comments.forEach((comment, index) => {
-          if (comment.blogID == recipeId) {
-            commentsHtml += `
+        for (let i = 0; i < data.length; i++) {
+          commentsHtml += `
                 <div class="item">
                   <div class="box">
                     <div class="detail-box">
-                      <h5>${comment.comment}</p>
-                      <p>${comment.username}</p>
+                      <h5>${data[i].comment}</p>
+                      <p></p>
 
                     </div>
                     <div class="img-box">
@@ -107,8 +130,7 @@ const BlogService = {
                     </div>
                   </div>
                 </div>`;
-          }
-        });
+        }
         $(".client_owl-carousel").html(commentsHtml);
       },
       error: function (xhr, status, error) {
@@ -125,44 +147,43 @@ const BlogService = {
   },
   getProfile: function (userID) {
     $.ajax({
-      url: "profile_data.json",
+      url: "http://localhost/WEB-PROJEKAT/rest/users/" + userID,
       type: "GET",
       dataType: "json",
       success: function (data) {
-        const profileDetails = data.profiles.find(
-          (profile) => profile.userID == userID
-        );
-        if (profileDetails) {
-          $(".creatorName").html(profileDetails.username);
-          $(".creatorSummary").html(profileDetails.bio);
-          BlogService.getBlogsByID(userID);
-        }
+        const profileDetails = data;
+        let username = profileDetails.Name + " " + profileDetails.Surname;
+        $(".creatorUsername").html(username);
+        $(".creatorName").html(profileDetails.username);
+        $(".creatorSummary").html(profileDetails.bio);
+        BlogService.getBlogsByID(userID);
       },
     });
   },
 
   getBlogsByID: function (userID) {
     $.ajax({
-      url: "blog_data.json",
+      url: "http://localhost/WEB-PROJEKAT/rest/blogs_by_user/" + userID,
       type: "GET",
       dataType: "json",
       success: function (data) {
         let blogsHtml = "";
-        data.recipes.forEach((recipe, index) => {
-          if (recipe.userID == userID) {
+        let recipe = data;
+        if (recipe.length != 0) {
+          for (let i = 0; i < recipe.length; i++) {
             blogsHtml += `
-                <a href="#current-blog" id=${recipe.id} onclick="BlogService.getBlogDetailsDelayed(${recipe.id})">
+                <a href="#current-blog" id=${recipe[i].idblogs} onclick="BlogService.getBlogDetailsDelayed(${recipe[i].idblogs})">
                     <div class="col-sm-6 col-lg-4-blog all pizza">
                     <div class="box">
                         <div>
                         <div class="img-box">
-                            <img src="assets/images/f1.p" alt="${recipe.name}" />
+                            <img src="assets/images/f1.p" alt="${recipe[i].Name}" />
                         </div>
                         <div class="detail-box">
-                            <h5 class="item-name">${recipe.name}</h5>
-                            <p class="creator">${recipe.creator}</p>
-                            <h6>${recipe.summary}</h6>,
-                            <h6>${recipe.macros}</h6>
+                            <h5 class="item-name">${recipe[i].Name}</h5>
+                            <p class="creator">${recipe[i].UserId}</p>
+                            <h6>${recipe[i].Summary}</h6>,
+                            <h6>${recipe[i].Macros}</h6>
                             <!-- You can add more details here if needed -->
                         </div>
                         </div>
@@ -170,7 +191,7 @@ const BlogService = {
                     </div>
                 </a>  `;
           }
-        });
+        }
         $(".filters-content").html(blogsHtml);
       },
       error: function (xhr, status, error) {

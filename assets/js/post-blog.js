@@ -40,24 +40,65 @@ $(document).ready(function () {
     console.log("Instruction values:", instructionValues);*/
 
     var blogData = {
-      userId: 1,
+      UserId: "1",
       Name: name,
       Summary: summary,
-      Ingredients: ingredientValues,
-      Instructions: instructionValues,
       Macros: macros,
     };
 
     $.ajax({
       //url: "blog_data.json",
-      url: "rest/add_blog.php",
+      url: "http://localhost/WEB-PROJEKAT/rest/postBlog/",
       type: "POST",
       dataType: "json",
       contentType: "application/json",
       data: JSON.stringify(blogData),
       success: function (response) {
         // Handle success response
-        console.log("Blog posted successfully:", response);
+        for (var i = 0; i < ingredientValues.length; i++) {
+          var ingredientData = {
+            blogId: response[1],
+            Ingredient: ingredientValues[i],
+          };
+
+          $.ajax({
+            url: "http://localhost/WEB-PROJEKAT/rest/postIngredient/",
+            type: "POST",
+            dataType: "json",
+            contentType: "application/json",
+            data: JSON.stringify(ingredientData),
+            success: function (response) {
+              console.log("Ingredient posted successfully:", response);
+            },
+            error: function (xhr, status, error) {
+              // Handle error response
+              console.error("Error posting Ingredient:", error);
+            },
+          });
+        }
+
+        for (var i = 0; i < instructionValues.length; i++) {
+          var instructionData = {
+            blogId: response[1],
+            Instruction: instructionValues[i],
+          };
+
+          $.ajax({
+            url: "http://localhost/WEB-PROJEKAT/rest/postInstruction/",
+            type: "POST",
+            dataType: "json",
+            contentType: "application/json",
+            data: JSON.stringify(instructionData),
+            success: function (response) {
+              console.log("Instruction posted successfully:", response);
+            },
+            error: function (xhr, status, error) {
+              // Handle error response
+              console.error("Error posting Instruction:", error);
+            },
+          });
+        }
+        console.log("Blog posted successfully:", response[1]);
       },
       error: function (xhr, status, error) {
         // Handle error response

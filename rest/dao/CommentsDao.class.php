@@ -8,8 +8,7 @@ class CommentsDao extends BaseDao{
     }
 
     public function get_comments($id){
-        return $this->query("SELECT * FROM comments WHERE blogID = :id",
-         ["id" => $id]);
+        return $this->query("SELECT * FROM comments WHERE blogID = :blogID", ["blogID" => $id]);
     }
 
     public function add_comment($comment){

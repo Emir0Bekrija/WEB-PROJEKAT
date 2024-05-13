@@ -17,7 +17,7 @@ $(document).ready(function () {
 
     // Send the AJAX request
     $.ajax({
-      url: "comments.json",
+      url: "http://localhost/WEB-PROJEKAT/rest/comments/",
       type: "POST",
       dataType: "json",
       contentType: "application/json",
