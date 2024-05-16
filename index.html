@@ -47,7 +47,7 @@
   <!--SPAPP style-->
   <body class="sub_page">
     <div class="hero_area">
-      <div class="bg-box">
+      <div class="bg-box-header">
         <img src="assets/images/hero-bg.jpg" alt="" />
       </div>
       <!-- header section strats -->
@@ -57,7 +57,7 @@
             class="navbar navbar-expand-lg custom_nav-container"
             role="navigation"
           >
-            <a class="navbar-brand" href="index.html">
+            <a class="navbar-brand" class="nav-link" href="#home">
               <span> Feane </span>
             </a>
 
@@ -81,7 +81,12 @@
                   >
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="#blog">Blog</a>
+                  <a
+                    class="nav-link"
+                    href="#blog"
+                    onclick="BlogService.getBlogDelayed()"
+                    >Blog</a
+                  >
                 </li>
                 <li class="nav-item">
                   <a class="nav-link" href="#about">About</a>
@@ -125,6 +130,9 @@
       <h1>POST BLOG</h1>
     </section>
     <section id="current-blog" data-load="current-blog.html">
+      <h1>POST BLOG</h1>
+    </section>
+    <section id="favourites" data-load="favourites.html">
       <h1>POST BLOG</h1>
     </section>
   </main>
@@ -190,6 +198,8 @@
 
   <!-- jQery -->
   <script src="assets/js/jquery-3.4.1.min.js"></script>
+  <!-- custom js -->
+  <script src="assets/js/custom.js"></script>
 
   <!-- popper js -->
   <script
@@ -207,6 +217,9 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-nice-select/1.1.0/js/jquery.nice-select.min.js"></script>
 
   <script src="assets/js/jquery.spapp.min.js"></script>
+
+  <script src="assets/js/blog-service.js"></script>
+
   <script>
     var app = $.spapp({
       defaultView: "#home",

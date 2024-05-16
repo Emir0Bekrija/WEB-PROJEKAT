@@ -2,6 +2,7 @@
   "recipes": [
     {
       "id": 1,
+      "userID": 1,
       "name": "Protein-Packed Chicken Crust Pizza",
       "creator": "Abby Madison",
       "summary": "A delicious pizza with a unique crust made of ground chicken breast, egg whites, and cheese, topped with a flavorful low-carb tomato sauce and your favorite toppings.",
@@ -28,6 +29,7 @@
     },
     {
       "id": 2,
+      "userID": 2,
       "name": "Classic Margherita Pizza",
       "creator": "James Smith",
       "summary": "A traditional Italian pizza topped with tomato sauce, fresh mozzarella cheese, and basil leaves, baked to perfection for a delightful meal.",
@@ -52,6 +54,7 @@
     },
     {
       "id": 3,
+      "userID": 3,
       "name": "Spaghetti Carbonara",
       "creator": "Emma Johnson",
       "summary": "A traditional Italian pasta dish made with spaghetti, eggs, Parmesan cheese, and crispy bacon, seasoned to perfection for a comforting meal.",
@@ -77,6 +80,7 @@
     },
     {
       "id": 4,
+      "userID": 4,
       "name": "Grilled Chicken Caesar Salad",
       "creator": "Michael Brown",
       "summary": "A refreshing salad featuring grilled chicken breast, crisp romaine lettuce, Parmesan cheese, and crunchy croutons, tossed in a creamy Caesar dressing.",
@@ -103,6 +107,7 @@
     },
     {
       "id": 5,
+      "userID": 5,
       "name": "Vegetarian Quinoa Stir-Fry",
       "creator": "Olivia Taylor",
       "summary": "A healthy and flavorful stir-fry dish made with protein-rich quinoa, assorted vegetables, and a savory soy sauce-based dressing.",
@@ -128,6 +133,7 @@
     },
     {
       "id": 6,
+      "userID": 1,
       "name": "Homemade Chocolate Chip Cookies",
       "creator": "Sophia Wilson",
       "summary": "Classic chocolate chip cookies made from scratch with butter, sugar, flour, and plenty of chocolate chips for a sweet and indulgent treat.",
@@ -158,6 +164,7 @@
     },
     {
       "id": 7,
+      "userID": 2,
       "name": "Vegetarian Lentil Soup",
       "creator": "William Anderson",
       "summary": "A comforting and hearty soup made with nutritious lentils, aromatic vegetables, and flavorful seasonings, perfect for a cozy meal.",
@@ -187,6 +194,7 @@
     },
     {
       "id": 8,
+      "userID": 3,
       "name": "Mediterranean Chickpea Salad",
       "creator": "Ella Martinez",
       "summary": "A vibrant and flavorful salad featuring chickpeas, crisp vegetables, tangy olives, and creamy feta cheese, tossed in a zesty olive oil and lemon dressing.",
@@ -214,6 +222,7 @@
     },
     {
       "id": 9,
+      "userID": 4,
       "name": "Spinach and Feta Stuffed Chicken Breast",
       "creator": "Daniel Garcia",
       "summary": "Juicy chicken breasts stuffed with spinach and feta cheese, baked to perfection for a flavorful and satisfying meal.",
@@ -240,6 +249,7 @@
     },
     {
       "id": 10,
+      "userID": 5,
       "name": "Homemade Vegetable Pizza",
       "creator": "Liam Brown",
       "summary": "A customizable pizza featuring a homemade crust topped with tangy tomato sauce, gooey mozzarella cheese, and an assortment of fresh vegetables.",
@@ -267,6 +277,7 @@
     },
     {
       "id": 11,
+      "userID": 4,
       "name": "Creamy Garlic Parmesan Pasta",
       "creator": "Ava Lee",
       "summary": "A decadent pasta dish featuring fettuccine noodles tossed in a creamy garlic Parmesan sauce, garnished with fresh parsley for a delightful meal.",

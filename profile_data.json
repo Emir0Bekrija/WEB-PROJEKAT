@@ -1,0 +1,39 @@
+{
+  "profiles": [
+    {
+      "userID": 1,
+      "username": "JohnDoe",
+      "name": "John",
+      "surname": "Doe",
+      "bio": "Passionate food enthusiast with a love for experimenting in the kitchen. Always seeking out new recipes to try and share with others."
+    },
+    {
+      "userID": 2,
+      "username": "JaneSmith",
+      "name": "Jane",
+      "surname": "Smith",
+      "bio": "Foodie at heart with a knack for creating delicious and healthy meals. Enjoys sharing recipes and culinary adventures with friends and family."
+    },
+    {
+      "userID": 3,
+      "username": "SamJohnson",
+      "name": "Sam",
+      "surname": "Johnson",
+      "bio": "Aspiring chef and avid home cook. Constantly inspired by flavors from around the world and eager to learn new cooking techniques."
+    },
+    {
+      "userID": 4,
+      "username": "EmilyBrown",
+      "name": "Emily",
+      "surname": "Brown",
+      "bio": "Dedicated food lover with a passion for wholesome and comforting dishes. Enjoys exploring farmer's markets and experimenting with fresh ingredients."
+    },
+    {
+      "userID": 5,
+      "username": "ChrisTaylor",
+      "name": "Chris",
+      "surname": "Taylor",
+      "bio": "Health-conscious cook who believes in the power of nutritious and delicious meals. Enjoys creating plant-based dishes and promoting sustainable eating habits."
+    }
+  ]
+}

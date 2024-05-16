@@ -81,7 +81,7 @@ body {
 
 .comment-box {
   left: 50%;
-  position: absolute;
+  position: relative;
   transform: translate(-50%, -50%);
   width: 500px;
   padding-top: 30px;
@@ -95,6 +95,13 @@ body {
   border-radius: 5px;
   resize: none;
   border: 1px solid #000;
+}
+/* Media query for smaller screens */
+@media screen and (max-width: 768px) {
+  .comment-box {
+    width: 95%; /* Adjust width for smaller screens */
+    max-width: none; /* Remove max-width for smaller screens */
+  }
 }
 
 .comment-box button {
@@ -125,6 +132,22 @@ body {
 }
 
 .potvrdi:hover {
+  background-color: #edb50a;
+}
+
+.postBlog {
+  width: 40%;
+  padding: 15px 20px;
+  margin-bottom: 10px;
+  margin-top: 40px;
+  border-radius: 55px;
+  resize: none;
+  border: 1px solid #ffc107;
+  background-color: #ffc107;
+  color: white;
+}
+
+.postBlog:hover {
   background-color: #edb50a;
 }
 
