@@ -21,11 +21,11 @@ class IngredientsDao extends BaseDao{
         }
     
         public function update_ingredient($id, $ingredient){
-            $this->update("ingredients", $id, $ingredient);
+            $this->update($id, $ingredient, "idIngredients");
         }
     
         public function delete_ingredient($id){
-            $this->execute("DELETE FROM ingredients WHERE id = :id", ["id" => $id]);
+            $this->execute("DELETE FROM ingredients WHERE blogID = :blogID", ["blogID" => $id]);
         }
         
 }

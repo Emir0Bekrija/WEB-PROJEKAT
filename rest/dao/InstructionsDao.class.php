@@ -21,10 +21,10 @@ class InstructionsDao extends BaseDao{
     }
 
     public function update_instruction($id, $instruction){
-        $this->update("instructions", $id, $instruction);
+        $this->update($id, $instruction, "idinstructions");
     }
 
     public function delete_instruction($id){
-        $this->execute("DELETE FROM instructions WHERE id = :id", ["id" => $id]);
+        $this->execute("DELETE FROM instructions WHERE blogID = :blogID", ["blogID" => $id]);
     }
 }

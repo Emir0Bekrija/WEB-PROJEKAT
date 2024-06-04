@@ -29,10 +29,10 @@ class BlogDao extends BaseDao{
     }
 
     public function update_blog($id, $blog){
-        $this->update("blogs", $id, $blog);
+        $this->update($id, $blog, "idblogs");
     }
 
     public function delete_blog($id){
-        $this->execute("DELETE FROM blogs WHERE id = :id", ["id" => $id]);
+        $this->execute("DELETE FROM blogs WHERE idblogs = :idblogs", ["idblogs" => $id]);
     }
 }
