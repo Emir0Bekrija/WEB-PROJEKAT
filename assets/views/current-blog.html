@@ -18,6 +18,13 @@
                     <p class="postSummary"> </p>
                       
                     <h2 class="postCreator">Creator: </h2>
+
+                    <button class="potvrdi">Save</button>
+                    <br>
+
+                    <button class="potvrdi">Edit</button>
+                    <br>
+                    
                     <button class="obrisi">Delete</button>
                 </div>
             </div>
@@ -87,6 +94,12 @@
     <!-- end client section -->
     <script src="assets/js/custom.js"></script>  
     <script src="assets/js/post-comment.js"></script>
+    <script>
+      let id = localStorage.getItem("recipeId");
+      if(id != null){
+        BlogService.getBlogDetailsDelayed(id);
+      }
+    </script>
     
   </body>
 

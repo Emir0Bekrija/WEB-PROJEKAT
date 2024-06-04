@@ -4,6 +4,7 @@ $(document).ready(function () {
     // Get the text from the textarea
     var commentText = $("textarea[name='comment']").val();
     var blogID = $(".postTitle").attr("id");
+    $("textarea[name='comment']").val("");
     //userID=currentUserId();
     userID = 1;
 
@@ -17,7 +18,7 @@ $(document).ready(function () {
 
     // Send the AJAX request
     $.ajax({
-      url: "http://localhost/WEB-PROJEKAT/rest/comments/",
+      url: "http://localhost/WEB-PROJEKAT/rest/comments",
       type: "POST",
       dataType: "json",
       contentType: "application/json",
@@ -25,6 +26,7 @@ $(document).ready(function () {
       success: function (response) {
         // Handle success response
         console.log("Comment posted successfully:", response);
+        BlogService.getBlogDetailsDelayed(blogID);
       },
       error: function (xhr, status, error) {
         // Handle error response

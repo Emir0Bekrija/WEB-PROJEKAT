@@ -83,10 +83,11 @@ class BaseDao {
         $query = substr($query, 0, -2);
         $query .= " WHERE {$id_column} = :id";
         $stmt = $this->connection->prepare($query);
-        $entity['id'] = $id;
+        $entity['id'] = $id;    
         $stmt->execute($entity);
     }
 
+    
     public function delete($id)
     {
         $stmt = $this->connection->prepare("DELETE FROM " . $this->table . " WHERE id=:id");

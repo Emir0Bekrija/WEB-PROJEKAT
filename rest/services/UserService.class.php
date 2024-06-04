@@ -17,6 +17,7 @@ class UserService{
     }
 
     public function add_user($user){
+        $user['password'] = password_hash($user['password'], PASSWORD_DEFAULT);
         return $this->dao->addUser($user);
     }
 
