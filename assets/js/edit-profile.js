@@ -1,3 +1,4 @@
+/* OLD EDIT PROFILE*/
 $(document).ready(function () {
   $("#editProfileButton").click(function (event) {
     event.preventDefault(); // Prevent default form submission behavior
@@ -21,28 +22,56 @@ $(document).ready(function () {
     console.log("Bio:", bio);
     console.log("Username:", username);
 
-    var profileData = {
-      Name: firstName,
-      Surname: surname,
-      bio: bio,
-      username: username,
+    var userId = Utils.get_from_localstorage("user").idUsers;
+
+    var file = $("#file")[0].files[0];
+
+    // Ensure a file is selected
+    if (!file) {
+      alert("Please select an image file.");
+      return;
+    }
+
+    // Ensure FileReader is supported
+    if (!window.FileReader) {
+      alert("FileReader API is not supported by your browser.");
+      return;
+    }
+
+    var reader = new FileReader();
+
+    reader.onloadend = function () {
+      var base64String = reader.result.replace("data:", "").replace(/^.+,/, "");
+      var profileData = {
+        Name: firstName,
+        Surname: surname,
+        bio: bio,
+        username: username,
+        Image: base64String,
+      };
+
+      $.ajax({
+        url: "http://localhost/WEB-PROJEKAT/rest/users/" + userId,
+        type: "PUT",
+        headers: {
+          Authentication: Utils.get_from_localstorage("user").token,
+        },
+        dataType: "json",
+        contentType: "application/json",
+        data: JSON.stringify(profileData),
+        success: function (response) {
+          // Handle success response
+          console.log("Profile updated successfully:", response);
+        },
+        error: function (xhr, status, error) {
+          // Handle error response
+          console.error("Error updating profile:", error);
+        },
+      });
     };
 
+    reader.readAsDataURL(file);
+
     // trebam stavit da update tacnog uzera
-    $.ajax({
-      url: "http://localhost/WEB-PROJEKAT/rest/users/1",
-      type: "PUT",
-      dataType: "json",
-      contentType: "application/json",
-      data: JSON.stringify(profileData),
-      success: function (response) {
-        // Handle success response
-        console.log("Profile updated successfully:", response);
-      },
-      error: function (xhr, status, error) {
-        // Handle error response
-        console.error("Error updating profile:", error);
-      },
-    });
   });
 });

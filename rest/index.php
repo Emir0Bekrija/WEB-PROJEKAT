@@ -30,6 +30,7 @@
     require_once __DIR__ . '/routes/IngredientsRoutes.php';
     require_once __DIR__ . '/routes/InstructionsRoutes.php';
     require_once __DIR__ . '/routes/auth_routes.php';
+    require_once __DIR__ . '/routes/middleware_routes.php';
 
 
     Flight::start();

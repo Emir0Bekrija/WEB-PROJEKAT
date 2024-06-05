@@ -1,5 +1,8 @@
 <?php
 
+use Firebase\JWT\JWT;
+use Firebase\JWT\Key;
+
 /**
  * @OA\Get(
  *     path="/users",
@@ -208,19 +211,9 @@ Flight::route('POST /register', function(){
  *                 description="Surname of the user"
  *             ),
  *             @OA\Property(
- *                 property="email",
- *                 type="string",
- *                 description="Email of the user"
- *             ),
- *             @OA\Property(
  *                 property="username",
  *                 type="string",
  *                 description="Username of the user"
- *             ),
- *             @OA\Property(
- *                 property="password",
- *                 type="string",
- *                 description="Password of the user"
  *             ),
  *             @OA\Property(
  *                 property="bio",

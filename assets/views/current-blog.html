@@ -7,7 +7,7 @@
         <div class="row">
             <div class="col-md-6">
                 <div class="img-box">
-                    <img src="assets/images/f1.png" alt="" />
+                    <img src="" alt="Food Picture" id="picture"/>
                 </div>
             </div>
             <div class="col-md-6">
@@ -19,13 +19,10 @@
                       
                     <h2 class="postCreator">Creator: </h2>
 
-                    <button class="potvrdi">Save</button>
-                    <br>
+                    <!-- Ingredients will be added here dynamically
+                    <button class="potvrdi" id="save">Save</button>
+                    <br> -->
 
-                    <button class="potvrdi">Edit</button>
-                    <br>
-                    
-                    <button class="obrisi">Delete</button>
                 </div>
             </div>
         </div>
@@ -95,10 +92,42 @@
     <script src="assets/js/custom.js"></script>  
     <script src="assets/js/post-comment.js"></script>
     <script>
-      let id = localStorage.getItem("recipeId");
-      if(id != null){
-        BlogService.getBlogDetailsDelayed(id);
-      }
+      $(document).ready(function () {
+        let id = localStorage.getItem("recipeId");
+        if(id != null){
+          BlogService.getBlogDetailsDelayed(id);
+        }
+
+
+        /*var userId;
+
+        var checkExist = setInterval(function() {
+          if ($('.profile-link').length) {
+            // Elements are now available
+            $('.profile-link').each(function() {
+              userId = $(this).attr('id');
+              console.log('User ID:', userId);
+              if (Utils.get_from_localstorage("user")) {
+                if(Utils.get_from_localstorage("user").idUsers == userId){
+                  $("#save").show();
+                  console.log('Isti su i postoji user i pokazat cu sve');
+                
+                }else{
+                  $("#save").show();
+                  console.log('Nisu isti i sakrit cu dugmice');
+                }
+
+              } else {
+                $("#save").hide();
+                console.log('Nema usera i sakrit cu dugmice');
+              }
+            });
+            // Clear the interval
+            clearInterval(checkExist);
+          }
+        }, 100);*/
+        
+      });
     </script>
     
   </body>

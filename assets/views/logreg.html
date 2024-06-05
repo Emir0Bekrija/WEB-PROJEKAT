@@ -12,25 +12,26 @@
     <link href="../css/login.css" rel="stylesheet" />
     <!-- responsive style 
     <link href="css/responsive.css" rel="stylesheet" />-->
+    <link href="../css/toastr.min.css" rel="stylesheet" />
   </head>
   <body>
     <div class="container" id="container">
       <div class="form-container sign-up">
         <form>
           <h1>Create Account</h1>
-          <input type="text" placeholder="Name" />
-          <input type="email" placeholder="Email" />
-          <input type="password" placeholder="Password" />
-          <button>Sign Up</button>
+          <input type="text" placeholder="Name" id="regName" />
+          <input type="email" placeholder="Email" id="regEmail" />
+          <input type="password" placeholder="Password" id="regPassword" />
+          <button id="signUpButton">Sign Up</button>
         </form>
       </div>
       <div class="form-container sign-in">
         <form>
           <h1>Log In</h1>
-          <input type="email" placeholder="Email" />
-          <input type="password" placeholder="Password" />
+          <input type="email" placeholder="Email" id="logEmail" />
+          <input type="password" placeholder="Password" id="logPassword" />
           <a href="#">Forgot Your Password?</a>
-          <button>Log In</button>
+          <button id="LogInButton">Log In</button>
         </form>
       </div>
       <div class="toggle-container">
@@ -52,5 +53,91 @@
     </div>
 
     <script src="../js/login.js"></script>
+    <script src="../js/jquery-3.4.1.min.js"></script>
+    <script src="../utils/rest_client.js"></script>
+    <script src="../utils/constants.js"></script>
+    <script src="../utils/utils.js"></script>
+    <script src="../js/toastr.min.js"></script>
+
+    <script>
+      $(document).ready(function () {
+        if (Utils.get_from_localstorage("user")) {
+          window.location.href = "../../index.html";
+        }
+
+        $("#signUpButton").click(function (event) {
+          // Prevent default form submission behavior
+          event.preventDefault();
+
+          // Get values from inputs
+          var name = $("#regName").val();
+          var email = $("#regEmail").val();
+          var password = $("#regPassword").val();
+
+          $("#regName").val("");
+          $("#regEmail").val("");
+          $("#regPassword").val("");
+
+          var nameArray = name.split(" ");
+
+          // Pop the last element to get the surname
+          var surname = nameArray.pop();
+
+          // Join the remaining elements to get the first name
+          var firstName = nameArray.join(" ");
+
+          var profileData = {
+            Name: firstName,
+            Surname: surname,
+            email: email,
+            password: password,
+          };
+
+          console.log("Profile Data:", profileData);
+
+          RestClient.post("rest/register", profileData, function (data) {
+            console.log("Data:", data);
+            if (data) {
+              toastr.success("User created successfully!");
+            } else {
+              toastr.error("User creation failed!");
+            }
+          });
+
+          // You can add your own code here to handle the form submission, e.g., sending the data to a server
+        });
+
+        $("#LogInButton").click(function (event) {
+          // Prevent default form submission behavior
+          event.preventDefault();
+
+          var email = $("#logEmail").val();
+          var password = $("#logPassword").val();
+
+          $("#logEmail").val("");
+          $("#logPassword").val("");
+
+          var loginData = {
+            email: email,
+            password: password,
+          };
+
+          console.log("Profile Data:", loginData);
+
+          RestClient.post("rest/auth/login", loginData, function (data) {
+            console.log("Data:", data);
+            if (data) {
+              toastr.success("User logged in successfully!");
+              Utils.set_to_localstorage("user", data);
+              window.location.href = "../../index.html";
+            } else {
+              toastr.error("User login failed!");
+            }
+          });
+
+          // You can add your own code here to handle the form submission, e.g., sending the data to a server
+        });
+      });
+    </script>
   </body>
 </html>

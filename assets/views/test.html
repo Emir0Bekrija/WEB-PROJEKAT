@@ -3,95 +3,145 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Food Blog</title>
+    <title>Property Upload</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background: linear-gradient(to right, #74ebd5, #acb6e5);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        overflow: hidden;
+      }
+      form {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+        width: 90%;
+      }
+      h1 {
+        color: #333;
+        text-align: center;
+      }
+      label {
+        display: block;
+        margin-top: 20px;
+        margin-bottom: 5px;
+        color: #666;
+      }
+      input[type="text"],
+      input[type="number"],
+      textarea,
+      input[type="file"] {
+        width: calc(100% - 16px);
+        padding: 8px;
+        margin-bottom: 10px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        box-sizing: border-box;
+      }
+      textarea {
+        resize: vertical;
+      }
+      button {
+        width: 100%;
+        padding: 10px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        margin-top: 20px;
+      }
+      button:hover {
+        background-color: #0056b3;
+      }
+    </style>
   </head>
   <body>
-    <section class="food_section layout_padding">
-      <div class="container">
-        <div class="heading_container heading_center">
-          <h2>Food Blog</h2>
-        </div>
+    <form id="propertyForm">
+      <h1>Upload Your Property</h1>
 
-        <div class="filters-content" id="blogPosts">
-          <!-- Blog posts will be added here dynamically -->
-        </div>
-      </div>
-    </section>
+      <label for="propertyName">Property Name:</label>
+      <input
+        type="text"
+        id="propertyName"
+        name="Name"
+        placeholder="Enter property name"
+        required
+      />
 
+      <label for="propertyDescription">Property Description:</label>
+      <textarea
+        id="propertyDescription"
+        name="Description"
+        rows="4"
+        placeholder="Describe the property"
+        required
+      ></textarea>
+
+      <label for="propertyPrice">Asking Price:</label>
+      <input
+        type="number"
+        id="propertyPrice"
+        name="Price"
+        placeholder="Enter asking price"
+        required
+      />
+
+      <label for="propertyImage">Upload Image:</label>
+      <input
+        type="file"
+        id="propertyImage"
+        name="Image"
+        accept="image/*"
+        required
+      />
+
+      <button type="button" id="uploadBtn">Upload Property</button>
+    </form>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
-      // Function to fetch data from JSON file and generate blog posts
-      async function fetchBlogPosts() {
-        try {
-          const response = await fetch("blog_data.json");
-          const data = await response.json();
+      $(document).ready(function () {
+        $("#uploadBtn").click(function () {
+          var file = $("#propertyImage")[0].files[0];
+          var reader = new FileReader();
 
-          const blogPostsContainer = document.getElementById("blogPosts");
+          reader.onloadend = function () {
+            var base64String = reader.result
+              .replace("data:", "")
+              .replace(/^.+,/, "");
+            var data = {
+              Name: $("#propertyName").val(),
+              Description: $("#propertyDescription").val(),
+              Price: $("#propertyPrice").val(),
+              Image: base64String,
+            };
 
-          // Loop through each blog post in the data
-          data.posts.forEach((post) => {
-            // Create elements for the blog post
-            const postLink = document.createElement("a");
-            postLink.setAttribute("href", `#blog${post.id}`);
+            $.ajax({
+              type: "POST",
+              url: "http://localhost/Web-Project-2024/backend/properties",
+              data: JSON.stringify(data),
+              contentType: "application/json",
+              success: function (response) {
+                alert("Property uploaded successfully!");
+              },
+              error: function (xhr, status, error) {
+                console.error("Error status:", status);
+                console.error("Error details:", xhr.responseText);
+                alert("Error uploading property: " + xhr.responseText);
+              },
+            });
+          };
 
-            const blogColumn = document.createElement("div");
-            blogColumn.classList.add(
-              "col-sm-6",
-              "col-lg-4-blog",
-              "all",
-              "pizza"
-            );
-
-            const blogBox = document.createElement("div");
-            blogBox.classList.add("box");
-
-            const blogContent = document.createElement("div");
-
-            const imageBox = document.createElement("div");
-            imageBox.classList.add("img-box");
-            const image = document.createElement("img");
-            image.setAttribute("src", "assets/images/f1.png");
-            image.setAttribute("alt", "");
-
-            const detailBox = document.createElement("div");
-            detailBox.classList.add("detail-box");
-
-            const itemName = document.createElement("h5");
-            itemName.classList.add("item-name");
-            itemName.textContent = post.name;
-
-            const creator = document.createElement("p");
-            creator.classList.add("creator");
-            creator.textContent = `By: ${post.creator}`;
-
-            const summary = document.createElement("h6");
-            summary.textContent = post.summary;
-
-            const macros = document.createElement("h6");
-            macros.classList.add("macros");
-            macros.textContent = `Macros: ${post.macros}`;
-
-            // Append elements to their respective parents
-            imageBox.appendChild(image);
-            detailBox.appendChild(itemName);
-            detailBox.appendChild(creator);
-            detailBox.appendChild(summary);
-            detailBox.appendChild(macros);
-
-            blogContent.appendChild(imageBox);
-            blogContent.appendChild(detailBox);
-
-            blogBox.appendChild(blogContent);
-            blogColumn.appendChild(blogBox);
-            postLink.appendChild(blogColumn);
-            blogPostsContainer.appendChild(postLink);
-          });
-        } catch (error) {
-          console.error("Error fetching blog data:", error);
-        }
-      }
-
-      // Call the function to fetch and display the blog posts
-      fetchBlogPosts();
+          reader.readAsDataURL(file);
+        });
+      });
     </script>
   </body>
 </html>
