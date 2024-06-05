@@ -42,6 +42,7 @@
     <link href="assets/css/responsive.css" rel="stylesheet" />
     <!--SPAPP style-->
     <link href="assets/css/spapp.css" rel="stylesheet" />
+    <link href="assets/css/toastr.min.css" rel="stylesheet" />
   </head>
 
   <!--SPAPP style-->
@@ -93,17 +94,24 @@
                 </li>
               </ul>
               <div class="user_option">
-                <a
-                  href="#profile"
-                  class="user_link"
-                  id="user_profile"
-                  onclick="BlogService.getBlogsByID(1)"
-                >
+                <a href="#profile" class="user_link" id="user_profile">
                   <i class="fa fa-user" aria-hidden="true"></i>
                 </a>
 
-                <a href="assets/views/logreg.html" class="order_online">
+                <a
+                  href="assets/views/logreg.html"
+                  class="order_online"
+                  id="login"
+                >
                   Sign in
+                </a>
+
+                <a
+                  href="assets/views/logreg.html"
+                  class="order_online"
+                  id="logout"
+                >
+                  Log out
                 </a>
               </div>
             </div>
@@ -223,7 +231,14 @@
 
   <script src="assets/js/jquery.spapp.min.js"></script>
 
-  <script src="assets/js/blog-service.js"></script>
+  <!-- nice select 
+  <script src="assets/js/blog-service.js"></script>-->
+
+  <script src="assets/js/blog-service2-0.js"></script>
+  <script src="assets/utils/rest_client.js"></script>
+  <script src="assets/utils/constants.js"></script>
+  <script src="assets/utils/utils.js"></script>
+  <script src="assets/js/toastr.min.js"></script>
 
   <script>
     var app = $.spapp({
@@ -239,5 +254,40 @@
     });
 
     app.run();
+  </script>
+
+  <script>
+    $(document).ready(function () {
+      if (Utils.get_from_localstorage("user")) {
+        $("#logout").show();
+        $("#login").hide();
+      } else {
+        $("#user_profile").hide();
+        $("#logout").hide();
+        $("#login").show();
+      }
+
+      $("#logout").click(function (event) {
+        event.preventDefault();
+        RestClient.post("rest/auth/logout", {}, function (data) {
+          console.log("Data:", data);
+          if (data) {
+            toastr.success("User logged out successfully!");
+            $("#user_profile").hide();
+            $("#logout").hide();
+            $("#login").show();
+            Utils.logout();
+            window.location.href = "index.html";
+          } else {
+            toastr.error("User logout failed!");
+          }
+        });
+      });
+
+      $("#user_profile").click(function (event) {
+        const userId = Utils.get_from_localstorage("user").idUsers;
+        BlogService.getProfile(userId);
+      });
+    });
   </script>
 </html>

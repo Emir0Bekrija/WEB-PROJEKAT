@@ -22,6 +22,7 @@ class UserService{
     }
 
     public function update_user($id, $user){
-        return $this->dao->update_user($id, $user);
+        $this->dao->update_user($id, $user);
+        return true;
     }
 }
